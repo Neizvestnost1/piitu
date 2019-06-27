@@ -12,7 +12,7 @@ from telegram.ext import Updater
 import telegram
 
 
-#port = int(environ.get('PORT', 5000))
+port = int(environ.get('PORT', 5000))
 #token = environ.get('BOT_TOKEN')
 #domain = environ.get('DOMAIN', '')
 #url = environ.get('URL', '/')
