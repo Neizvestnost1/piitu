@@ -22,12 +22,12 @@ bot_updater = Updater(token)
 
 def start_listen():
     """Begin listening"""
-    bot_updater.start_webhook(url_path="/",
-                          port=port,
-                           listen='0.0.0.0')
-    bot_updater.bot.set_webhook("https://{}.herokuapp.com/{}")
-    #bot_updater.start_polling(poll_interval=0.0, timeout=10, clean=False, bootstrap_retries=-1,
-               #           read_latency=2.0, allowed_updates=None)
+   # bot_updater.start_webhook(url_path="/",
+         #                 port=port,
+        #                   listen='0.0.0.0')
+   # bot_updater.bot.set_webhook("https://"+domain+"/")
+    bot_updater.start_polling(poll_interval=0.0, timeout=10, clean=False, bootstrap_retries=-1,
+                          read_latency=2.0, allowed_updates=None)
 
     bot_updater.idle()
 
