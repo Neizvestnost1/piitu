@@ -12,10 +12,10 @@ from telegram.ext import Updater
 import telegram
 
 
-port = int(environ.get('PORT', 5000))
+#port = int(environ.get('PORT', 5000))
 #token = environ.get('BOT_TOKEN')
-domain = environ.get('DOMAIN', '')
-url = environ.get('URL', '/')
+#domain = environ.get('DOMAIN', '')
+#url = environ.get('URL', '/')
 token = '799758354:AAFp9ta6ZKFMeVh7snCoymjUd64lBPL5Mbk'
 bot_updater = Updater(token)
 
