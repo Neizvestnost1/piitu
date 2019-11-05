@@ -20,6 +20,15 @@ import telegram
 COUNTER = {}
 
 #KEYBOARDS
+СHOICE_MARKUP = ReplyKeyboardMarkup([['Да'],
+                                     ['Нет'],
+                                          ],
+                                      resize_keyboard=True)
+
+SCHEDULE_MARKUP = ReplyKeyboardMarkup([['Расписание Магистров'],
+                                       ],
+                                      resize_keyboard=True)
+
 MAIN_MENU_MARKUP = ReplyKeyboardMarkup([['Преимущества'],
                                         ['Специальности'],
                                         ['Пройти тест'],
@@ -33,9 +42,16 @@ SOCIAL = InlineKeyboardMarkup(
      [InlineKeyboardButton("Youtube", url='https://www.youtube.com/channel/UCc9ig08a4WFyBRbzIkoAEew')],
      ])
 
-#CONSTANT
-INITIAL_MESSAGE = 'Вас приветсвует кафедра *ПИИТУ НТУ "ХПИ"*, выберите интересующий вас пункт меню:'
+SCHEDULE_INLINE = InlineKeyboardMarkup(
+    [[InlineKeyboardButton("5 курс", url='https://docs.google.com/document/d/1vEYzviepRu44JDGz9ibylQcst41QQHtKq3-i9VhJ6fw/edit?usp=sharing')],
+     [InlineKeyboardButton("6 курс", url='https://docs.google.com/document/d/1rk-05l6vcqjJiYiXBphh48qRPzYKrSaCijEDe5WQK0s/edit?usp=sharing')],
+     ])
 
+
+#CONSTANT
+INITIAL_MESSAGE = 'Вас приветсвует кафедра *ПИИТУ НТУ "ХПИ"*, Вы являетесь студентом кафедры?:'
+SECOND_MESSAGE = 'Если Вы потенциальный абитуриент, предлагаем ознакомиться с особенностями кафедры ПИИТУ.'
+THIRD_MESSAGE = 'Здесь Вы можете просмотреть расписание занятий.'
 LOCATION = 'г. Харьков, ул.Кирпичева, 2,корпус У2, 7 этаж.'
 
 CONTACT = 'Телефон: 066-713-79-28, 057-707-69-21\n' \
@@ -162,7 +178,7 @@ def get_result(message):
 # MESSAGE HANDLER
 def start(bot, update):
     update.message.reply_text(INITIAL_MESSAGE,
-                              reply_markup=MAIN_MENU_MARKUP, parse_mode=telegram.ParseMode.MARKDOWN)
+                              reply_markup=СHOICE_MARKUP, parse_mode=telegram.ParseMode.MARKDOWN)
 
 
 def test_start(bot, update):
@@ -173,6 +189,17 @@ def test_start(bot, update):
                               reply_markup=markup)
 
 #MENU
+def choice_yes(bot, update):
+    update.message.reply_text(THIRD_MESSAGE,
+                              reply_markup=SCHEDULE_MARKUP)
+
+
+def schedule_mag(bot, update):
+    update.message.reply_text('Расписание:', reply_markup=SCHEDULE_INLINE)
+
+def choice_no(bot, update):
+    update.message.reply_text(SECOND_MESSAGE,
+                              reply_markup=MAIN_MENU_MARKUP)
 def main_menu(bot, update):
     update.message.reply_text('Главное меню',
                               reply_markup=MAIN_MENU_MARKUP)
@@ -229,6 +256,9 @@ def callback_handler(bot, update):
 
 # Handlers for bot
 bot_handlers = [CommandHandler('start', start),
+                RegexHandler('Да', choice_yes),
+                RegexHandler('Расписание Магистров', schedule_mag),
+                RegexHandler('Нет', choice_no),
                 RegexHandler('На главную', main_menu),
                 RegexHandler('Преимущества', advantages),
                 RegexHandler('Специальности', specialty),
